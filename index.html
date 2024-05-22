@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="Emu3D: Mesh Generation with Improved Geometry, Texture and Materials">
+    <meta name="description" content="Emu3D: Text-to-Mesh Generation with High-Quality Geometry, Texture, and PBR Materials">
     <meta name="keywords" content="Emu3D, Generative Models, LRM, Diffusion Models">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Emu3D</title>
@@ -65,7 +65,7 @@
             <div class="container is-max-desktop">
                 <div class="columns is-centered">
                     <div class="column has-text-centered">
-                        <h1 class="title is-1 publication-title">Emu3D: Mesh Generation with Improved Geometry, Texture and Materials</h1>
+                        <h1 class="title is-1 publication-title">Emu3D: Text-to-Mesh Generation with High-Quality Geometry, Texture, and PBR Materials</h1>
                         <div class="is-size-5 publication-authors">
                             <span class="author-block">Anonymous Author(s)</span>
                         </div>
@@ -187,27 +187,11 @@
                     <h2 class="title is-3">Abstract</h2>
                     <div class="content has-text-justified">
                         <p>
-                        State-of-the-art text-to-3D methods typically employ 2D image grid generation, followed by large reconstruction models for 3D reconstruction. However, these approaches suffer from several limitations: they use density-based shape representations that yield lower-quality geometry and textures after meshing, and the textures they produce exhibit baked-in lighting, reducing their adaptability in new environments.
-                        </p>
-                        <p>
-                        We present <span class="dnerf">Emu3D</span>, an improved method that addresses these issues by: (a) representing shapes as signed distance functions (SDF) coupled with a novel scalable volumetric SDF renderer and a direct SDF loss implementation, resulting in enhanced geometric accuracy; (b) refining textures in the UV space to achieve high-quality, detailed textures; and (c) enabling physically-based rendering (PBR) material generation through paired shaded-albedo image grid generation and a novel deferred shading loss.
-                        </p>
-                        <p>
-                        Our approach produces meshes from text prompts in 30 seconds and demonstrates significant improvements, achieving 17% improvement in Chamfer Distance and 40% in LPIPS over the best concurrent work for sparse-view reconstruction, and a human preference of 72% over the best industry PBR-generative text-to-3D model with comparable inference time.
+                        3D generative AI has enormous potential for industry, but its quality remains insufficient for professional use. We present <span class="dnerf">Emu3D</span>, a significant advancement in text-to-3D which produces faithful, high-quality meshes with full material control. Compared to prior works that bake shading in the 3D object, we output physically-based rendering (PBR) materials, supporting realistic relighting. <span class="dnerf">Emu3D</span> generates first several views of the object with factored shaded and albedo, and then reconstructs colours, metallicity and roughness in 3D, training the reconstruction network via a deferred shading loss. The latter models shape more reliably by outputting directly a sign-distance function and using a corresponding loss, which, implemented in fused kernels, are highly memory efficient. After mesh extraction, a final texture refinement step operating in UV space significantly improves sharpness and details. Emu3D achieves 17% improvement in Chamfer Distance and 40% in LPIPS over the best concurrent work for few-view reconstruction, and a human preference of 72% over the best industry text-to-3D tool, including those that support PBR, with comparable inference time.
                         </p>
                     </div>
                 </div>
             </div>
-            <!-- Paper video. -->
-            <!-- <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-                    <h2 class="title is-3">Video</h2>
-                    <div class="publication-video">
-                    <iframe src="https://www.youtube.com/embed/M5OU_fiD3Jk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div> -->
-            <!--/ Paper video. -->
         </div>
     </section>
 
