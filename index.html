@@ -62,7 +62,33 @@
                     <div class="column has-text-centered">
                         <h1 class="title is-1 publication-title">Emu3D: Text-to-Mesh Generation with High-Quality Geometry, Texture, and PBR Materials</h1>
                         <div class="is-size-5 publication-authors">
-                            <span class="author-block">Anonymous Author(s)</span>
+                            <span class="author-block">
+                                <a href="https://nihalsid.github.io/">Yawar Siddiqui</a><sup>1</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://www.tmonnier.com/">Tom Monnier</a><sup>*2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://fkokkinos.github.io/">Filippos Kokkinos</a><sup>*2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://uk.linkedin.com/in/mahendrakariya">Mahendra Kariya</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://www.yanirk.com/">Yanir Kleiman</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://fr.linkedin.com/in/emilien-garreau-b87606ab/en">Emilien Garreau</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://ai.meta.com/people/218463647991453/oran-gafni/">Oran Gafni</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://uk.linkedin.com/in/natalia-neverova-14066133">Natalia Neverova</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://www.robots.ox.ac.uk/~vedaldi/">Andrea Vedaldi</a><sup>2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://www.shapovalov.ro/">Roman Shapovalov</a><sup>*2</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://www.robots.ox.ac.uk/~david/">David Novotny</a><sup>*2</sup></span>
+                        </div>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Technical University of Munich,</span>
+                            <span class="author-block"><sup>2</sup>GenAI, Meta,</span>
+                            <span class="author-block"><sup>*</sup>Equal Core Contributors</span>
                         </div>
                         <div class="column has-text-centered">
                             <div class="publication-links">
@@ -181,12 +207,22 @@
                     </div>
                 </div>
             </div>
+            <!-- Paper video. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Video</h2>
+                    <div class="publication-video">
+                        <iframe src="https://www.youtube.com/embed/PHxR_pX0UhE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <!--/ Paper video. -->
         </div>
     </section>
     <section class="section">
         <div class="container is-max-desktop">
             <!-- Novel datasets. -->
-            <div class="columns is-centered" style="margin-top: -50px">
+            <div class="columns is-centered" id="results-relight" style="margin-top: -50px">
                 <div class="column is-full-width">
                     <h2 class="title is-4">Relightability of Assets</h2>
                     <div class="content has-text-justified">
@@ -294,6 +330,37 @@
             <!--/ Concurrent Work. -->
         </div>
     </section>
+    <section class="section" style="margin-top: -50px;" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre>
+                <code>To be added</code></pre>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <a class="icon-link" href="static/Emu3D.pdf">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+                <a class="icon-link" href="https://github.com/nihalsid" class="external-link" disabled>
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p style="text-align:center">
+                            Source code mainly borrowed from <a href="https://keunhong.com/">Keunhong Park</a>'s <a href="https://nerfies.github.io/">Nerfies website</a> and Yawar Siddiqui's <a href="https://nihalsid.github.io/texturify/">Texturify</a> webpage.
+                        </p>
+                        <p style="text-align:center">
+                            Please contact <a href="https://nihalsid.github.io">Yawar Siddiqui</a> for feedback and questions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <!-- Import maps polyfill -->
     <!-- Remove this when import maps will be widely supported -->
     <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
@@ -729,6 +796,11 @@
             style_id = "2"
         }
 
+        function isMobile() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+        }
+
         document.body.onmousedown = function(evt) {
             if (evt.button === 0)
                 mouse_button_down = true
@@ -743,25 +815,27 @@
             slider.removeAttribute("tabIndex")
             // slider.addEventListener("mouseout", reset_orbit_controls);
 
-            setup_render_divs("mesh_tt3d_0", './models/frog.glb')
-            setup_render_divs("mesh_tt3d_1", './models/cheese.glb')
-            setup_render_divs("mesh_tt3d_2", './models/train.glb')
-            setup_render_divs("mesh_tt3d_3", './models/pug.glb')
+            if (!isMobile()) {
+                setup_render_divs("mesh_tt3d_0", './models/frog.glb')
+                setup_render_divs("mesh_tt3d_1", './models/cheese.glb')
+                setup_render_divs("mesh_tt3d_2", './models/train.glb')
+                setup_render_divs("mesh_tt3d_3", './models/pug.glb')
 
-            setup_render_divs("mesh_tt3d_4", './models/mouse_bust.glb')
-            setup_render_divs("mesh_tt3d_5", './models/goldentoilet.glb')
-            setup_render_divs("mesh_tt3d_6", './models/mushroom.glb')
-            setup_render_divs("mesh_tt3d_7", './models/sciencedog.glb')
+                setup_render_divs("mesh_tt3d_4", './models/mouse_bust.glb')
+                setup_render_divs("mesh_tt3d_5", './models/goldentoilet.glb')
+                setup_render_divs("mesh_tt3d_6", './models/mushroom.glb')
+                setup_render_divs("mesh_tt3d_7", './models/sciencedog.glb')
 
-            setup_style_render_divs("mesh_env_0", './models/cat_plastic.glb')
-            setup_style_render_divs("mesh_env_1", './models/cat_rock.glb')
-            setup_style_render_divs("mesh_env_2", './models/cat_silver.glb')
-            setup_style_render_divs("mesh_env_3", './models/cat_rusted.glb')
-
-            // setup_render_divs("mesh_svr_0", './models/car_00265.ply')
-            // setup_render_divs("mesh_svr_1", './models/car_00742.ply')
-            // setup_render_divs("mesh_svr_2", './models/car_00848.ply')
-            // setup_render_divs("mesh_svr_3", './models/car_00944.ply')
+                setup_style_render_divs("mesh_env_0", './models/cat_plastic.glb')
+                setup_style_render_divs("mesh_env_1", './models/cat_rock.glb')
+                setup_style_render_divs("mesh_env_2", './models/cat_silver.glb')
+                setup_style_render_divs("mesh_env_3", './models/cat_rusted.glb')
+            } else {
+                document.getElementById("results-carousel-0").style.display = 'none';
+                document.getElementById("results-carousel-1").style.display = 'none';
+                document.getElementById("results-relight").style.display = 'none';
+                document.getElementById("message-help").innerHTML = "To view the generated meshes, please open this page on a non-mobile device."
+            }
         };
 
     </script>
